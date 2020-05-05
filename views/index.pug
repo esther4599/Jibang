@@ -1,0 +1,98 @@
+extends layout
+
+block content
+    // min title
+    a.manual_button.fixed-bottom.btn-dark.rounded-circle(href='/manual_index' role='button')
+        i.fa.fa-exclamation-circle.fa-3x(aria-hidden='true')
+
+    .jumbotron.jumbotron-fluid.mt-5.pb-1.min_title
+      .container
+          h1.display-3 JI방
+          |
+          p.lead 명지대 인근 방 어디?? 지방~~!!!!!
+    // btn in min
+    form(action='/room' method='post')
+        .button_A.col-md-8.col-sm-10.mx-auto
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='명지대앞') 명지대앞
+            |
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='동진마을') 동진마을
+            |
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='역북지구') 역북지구
+            |
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='덕곡마을') 덕곡마을
+            |
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='명지대역') 명지대역
+            |
+            a(href='/room')
+                button.btn.btn-outline-dark.btn-lg.btn-block.col-sm-10.mx-auto(type='submit' name='locate' value='용인터미널') 용인터미널
+
+
+    // map
+    #map.col-lg-10.col-md-8.mx-auto.main_map
+      h1 지도가 들어갈 자리입니다.
+        script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=297ef10405e7f474395afe8d2094db8b&libraries=services')
+        |
+        script.
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 6 // 지도의 확대 레벨
+            };
+            // 지도를 생성합니다
+            var map = new daum.maps.Map(mapContainer, mapOption);
+            // 주소-좌표 변환 객체를 생성합니다
+            const locate = ['경기 용인시 처인구 명지로116번길 8' , '경기 용인시 처인구 남동 590-4' , '경기 용인시 처인구 역북동 753-1' , '경기도 용인시 처인구 명지로 161' , '경기 용인시 처인구 중부대로 1486' , '경기 용인시 처인구 역북동 484-10',''];
+            const locate_name = ['명지대앞' , '덕곡마을' , '역북지구' , '동진마을' , '용인터미널' , '명지대역'];
+            var geocoder = new daum.maps.services.Geocoder();
+            for(let i = 0 ; i < 6 ; i++){
+                // 주소로 좌표를 검색합니다
+                geocoder.addressSearch(locate[i], function(result, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+                        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new daum.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new daum.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + locate_name[i] + '</div>'
+                        });
+                        infowindow.open(map, marker);
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    }
+                });
+            }
+
+
+    form(action='/room' method='post')
+        // button
+        .button_B
+            .col-lg-10.mx-auto
+                .col-lg-12.mx-auto.button_B-btn-top
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='명지대앞') 명지대앞
+                    |
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='동진마을') 동진마을
+                |
+                .col-lg-12.mx-auto.button_B-btn-middle
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='덕곡마을') 덕곡마을
+                    |
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='역북지구') 역북지구
+                |
+                .col-lg-12.mx-auto.button_B-btn-bottom
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='명지대역') 명지대역
+                    |
+                    a(href='/room')
+                        button.btn.btn-outline-dark.btn-index-bottom.btn-lg.col-5.m-1(type='submit' name='locate' value='용인터미널') 용인터미널

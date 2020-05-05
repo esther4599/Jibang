@@ -1,0 +1,200 @@
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+body {
+  font-family: 'Hanna', sans-serif;
+}
+
+.arrow{
+  background-color:gray;
+}
+
+.list_map{
+  border:1px solid black ;
+  width:100%;
+  height:400px;
+}
+
+.list_maplocate{
+  margin-left: 50%;
+  margin-top: 30%;
+}
+
+.main_img{
+  width: 100%;
+  min-height: 300px;
+  max-height: 500px;
+}
+
+#home-img{
+  margin-right: 5px;
+}
+
+.title_card{
+  margin-bottom: 2em;
+}
+
+.main_btn{
+  min-width: 5em;
+}
+
+.main_map{
+  width:100%;
+  height:330px;
+}
+
+.button_B{
+  margin-left: 10%;
+}
+
+.manual_button{
+  width: 50px;
+  text-align: center;
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+.button_B-btn-top{
+  margin-top: 1em;
+}
+.button_B-btn-middle{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.button_B-btn-bottom{
+  margin-bottom: 1em;
+}
+
+.login_window{
+  position: absolute;
+  width: 60%;
+  margin-top: 25%;
+  margin-left: 20%;
+}
+
+.article_title{
+  margin-top: 10%;
+}
+
+.list_card{
+  float: left;
+  width: 100%;
+}
+
+.table{
+  width: 90%;
+}
+
+.myPage{
+  text-align: center;
+}
+
+.cards-img{
+  width: auto;
+  min-width: 50%;
+  max-width: 100%;
+  height: auto;
+  min-height: 200px;
+  max-height: 350px;
+}
+
+.cardsize{
+  height: auto;
+  max-height: 40rem;
+  width: 100%;
+  background-color: white;
+}
+
+.card_bodysize{
+  background-color: white;
+}
+
+.slide-img-size{
+  height:auto;
+  max-height: 450px;
+}
+
+.slide-img{
+  width: 90%;
+  height: 450px;
+}
+
+.img-fluid{
+  width: auto;
+  max-width: 200px;
+  height:auto;
+  max-height: 200px;
+}
+
+@media only screen and (max-device-width : 425px){
+
+  /* .cards-img{
+    height: 200px;
+  }
+  .slide-img{
+    height: 260px;
+  } */
+}
+
+@media only screen and (max-device-width : 767px) {
+
+  .title_card{
+    display: none;
+  }
+
+  .button_B{
+    display: none;
+  }
+
+  #map{
+    display: none;
+  }
+
+}
+
+.btn-rooms-index{
+  margin-bottom: 2em;
+  margin-left: 0.5em;
+  float: left;
+}
+
+.show-needMargin{
+  margin-left: 1em;
+  margin-bottom: 2em;
+}
+
+.show-needMarginbtn{
+  margin-bottom: 0.5em;
+  margin-right: 0.5em;
+}
+.comment{
+  border-radius: 10px;
+}
+.show-needMarginBtn{
+  margin-bottom: 1em;
+}
+th{
+  width: 6em;
+}
+
+.facebookbutton {
+  color: white;
+  background-color: #4d70ba;
+  border-color: #4d70ba; 
+}
+
+@media only screen and (min-device-width : 767px) {
+
+  .min_title{
+    display: none;
+  }
+
+  .button_A{
+    display: none;
+  }
+
+  .list_card{
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+}

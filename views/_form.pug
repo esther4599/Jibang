@@ -1,0 +1,221 @@
+|
+.col-lg-10.mx-auto.border.border-top-0.border-right-0.border-left-0.border-dark
+    .input-group.mt-1.col-lg-6
+        span#basic-addon1.input-group-addon
+            h3 제목
+        // 방제목 title
+        input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='title' value=room.title)
+    // 방지역 locate
+    select.custom-select.m-3(name='locate')
+        option(selected='',value=room.locate) 지역
+        |
+        option(value='명지대앞') 명지대앞
+        |
+        option(value='동진마을') 동진마을
+        |
+        option(value='덕곡마을') 덕곡마을
+        |
+        option(value='역북지구') 역북지구
+        |
+        option(value='명지대역') 명지대역
+        |
+        option(value='용인터미널') 용인터미널
+    // 방 종류 type
+    select.custom-select.m-3(name='type')
+        option(selected='',room.type) 방종류
+        |
+        option(value='원룸') 원룸
+        |
+        option(value='1.5룸') 1.5룸
+        |
+        option(value='투룸') 투룸
+    p.card-text
+        small.text-muted
+            | * 꼭 선택해 주세요 *
+|
+.col-lg-10.mx-auto.p-2.border.border-top-0.border-right-0.border-left-0.border-dark
+    h2.m-3 상세이미지
+    p.card-text
+        small.text-muted
+            | * 사진은 최대 3개까지만 가능합니다 *
+    |
+    //- 사진업로드
+    .form-group#file-section
+        label(for="img")
+        input#file.form-control(type="file" , multiple="multiple")
+        if room.img
+            -for (var i = 0; i < room.img.length; i++)
+                input(name='img[]' , value=room.img[i])
+        //- input#url.form-control(type="text", readonly="readonly", name="img[]", value=event.img )
+        img#preview.img-fluid(src="https://dummyimage.com/200x200/ccc/fff")
+
+//- 이미지 업로드
+script.
+    $(function() {
+        $("#preview").hide();
+        $("#file").change(function() {
+            var files = $("#file")[0].files;
+            console.log(files)
+            for(file of files){
+                console.log(file)
+                if (file) {
+                    var url = "/s3?filename=" + encodeURIComponent(file.name) + 
+                            "&type=" + encodeURIComponent(file.type);
+                    console.log(url);
+                    const img_file = file;
+                    $.getJSON(url, function(resp) {
+                        console.log(resp.signedRequest);
+                        $.ajax({
+                            url: resp.signedRequest,
+                            method: 'PUT',
+                            data: img_file,
+                            headers: {'x-amz-acl': 'public-read', 'Content-Type': img_file.type},
+                            processData: false, 
+                            contentType: img_file.type,
+                            success: function() {
+                                $("#preview").attr("src", resp.url).show();
+                                $("#file-section").append("<input name='img[]' value='" + resp.url + "'>");
+                                //- $("#url").val(resp.url);
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    });
+|
+.col-lg-10.col-sm-12.mx-auto.border.border-top-0.border-right-0.border-left-0.border-dark.m-3
+    h2.m-3 상세 정보
+    |
+    p
+        small.text-muted
+                | * 돈은 만원단위로 작성해 주세요 *
+    .row.m-3
+        .input-group.col-md-4.col-sm-12.mx-auto.mt-1
+            span#basic-addon1.input-group-addon 계약기간
+            // 계약기간 time
+            input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='time',value=room.time)
+        |
+        .input-group.col-md-4.col-sm-12.mx-auto.mt-1
+            span#basic-addon1.input-group-addon 평수
+            // 평수 size
+            input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='size', value=room.size)
+        |
+        .input-group.col-md-4.col-sm-12.mx-auto.mt-1
+            span#basic-addon1.input-group-addon 보증금
+            // 보증금 security_money
+            input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='security_money', value=room.security_money)
+        |
+        .input-group.col-md-6.col-sm-12.mx-auto.mt-1
+            span#basic-addon1.input-group-addon 월세
+            // 월세 monthly_rent
+            input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='monthly_rent',value=room.monthly_rent)
+        |
+        .input-group.col-md-6.col-sm-12.mx-auto.mt-1
+            span#basic-addon1.input-group-addon 관리비
+            // 관리비 management_expenses
+            input.form-control(type='text', placeholder='', aria-label='Username', aria-describedby='basic-addon1', name='management_expenses', value=room.management_expenses)
+|
+.col-lg-10.mx-auto.p-3.border.border-top-0.border-right-0.border-left-0.border-dark
+    // 위치 address
+    row
+        p
+            small.text-muted
+                | * 도로명 주소를 정확하게 입력해주세요 *
+        h2
+            .col-10.mb-3
+                | 도로명 주소 :
+                input.border.border-dark.ml-2(type='text', name='address', value=room.address)
+            .col-10
+                | 상세 주소 :
+                input.border.border-dark.ml-2(type='text', name='detail_address', value=room.detail_address)
+|
+.col-lg-10.mx-auto
+    h2.m-3 옵션
+|
+.col-lg-10.col-sm-10.mx-auto
+    p
+        small.text-muted
+            | * ex) 냉장고, 세탁기, 옷장, 인덕션 etc *
+    .row
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션1
+                span.input-group-addon
+                    // 세탁기 washer
+                    input(type='text', aria-label='Checkbox for following text input', name='option1' , value=room.option1)
+                |
+        |
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션2
+                span.input-group-addon
+                    // 티비 tv
+                    input(type='text', aria-label='Checkbox for following text input', name='option2', value=room.option2)
+                |
+        |
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션3
+                span.input-group-addon
+                    // 냉장고 freezer
+                    input(type='text', aria-label='Checkbox for following text input', name='option3', value=room.option3)
+                |
+        |
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션4
+                span.input-group-addon
+                    // 밥솥 rice_cooker
+                    input(type='text', aria-label='Checkbox for following text input', name='option4', value=room.option4)
+                |
+        |
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션5
+                span.input-group-addon
+                    // 정수기 purifier
+                    input(type='text', aria-label='Checkbox for following text input', name='option5', value=room.option5)
+                |
+        |
+        .col-lg-4.col-md-6.mt-2
+            .input-group
+                p.form-control  옵션6
+                span.input-group-addon
+                    // 침대 bed
+                    input(type='text', aria-label='Checkbox for following text input', name='option6', value=room.option6)
+                |
+    |
+    .m-3.p-3.border.border-bottom-0.border-left-0.border-right-0.border-dark
+        h4 추가옵션
+        // 기타옵션 etc_option
+        input.border.border-dark.col-lg-5(type='text', name='etc_option' , value=room.etc_option)
+    |
+    .m-3.p-3.border.border-bottom-0.border-left-0.border-right-0.border-dark
+        p
+            small.text-muted
+                | * 돈은 만원단위로 작성해 주세요 *
+        h4 최근 세금
+        // 세금
+        div
+            | 전기세 :
+            input.border.border-dark.col-lg-5.col-md-6.col-sm-8.m-1(type='text', name='electric', value=room.electric)
+        |
+        div
+            | 수도세 :
+            input.border.border-dark.col-lg-5.col-md-6.col-sm-8.m-1(type='text', name='water' , value=room.water)
+        |
+        div
+            | 가스비 :
+            input.border.border-dark.col-lg-5.col-md-6.col-sm-8.m-1(type='text', name='gas' , value=room.gas)
+    |
+    .m-3.p-3.border.border-bottom-0.border-left-0.border-right-0.border-dark
+        h4 부가 설명
+        // 부가설명 addition_ex
+        input.border.border-dark.col-lg-5(type='text', name='addition_ex' , value=room.addition_ex)
+    |
+    .m-3.p-3.border.border-bottom-0.border-left-0.border-right-0.border-dark
+        h4 연락처
+        // 부가설명 addition_ex
+        input.border.border-dark.col-lg-5(type='text', name='phone_num' , value=room.phone)
+    |

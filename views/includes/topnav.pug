@@ -1,0 +1,52 @@
+// navbar
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+    a.navbar-brand(href='/')
+        img#home-img(src='/images/home.png', alt='main-home')
+        | JI방
+    |       
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    |       
+    #navbarNav.collapse.navbar-collapse.justify-content-end
+        ul.navbar-nav
+            li.dropdown
+                form(action='/room' method='post')
+                    button#dropdownMenuButton.btn.btn-dark.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        | RoomList
+                    .dropdown-menu.dropdown-menu-right(aria-labelledby='dropdownMenuButton')
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='명지대앞') 명지대앞
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='동진마을') 동진마을
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='덕곡마을') 덕곡마을
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='역북지구') 역북지구
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='명지대역') 명지대역
+                        a.dropdown-item(href='/room')
+                            button( type='submit' name='locate' value='용인터미널') 용인터미널
+
+            li.nav-item
+                |
+                a.nav-link.active(href='/room/together')
+                    | 모아보기
+            if (!currentUser) 
+                li.nav-item
+                    |
+                    a.nav-link.active(href='/login')
+                        | Login
+                        //- span.sr-only (current)
+            else
+                li.nav-item
+                    a.nav-link.active(href=`/mypage`)
+                        | ID
+                        //- span.sr-only (current)
+                li.nav-item
+                    a.nav-link.active(href='/room/new')
+                        | 방올리기
+                        //- span.sr-only (current)
+                li.nav-item                   
+                    a.nav-link.active(href='/logout')
+                        | 로그아웃
+                        //- span.sr-only (current)

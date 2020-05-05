@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+    a.manual_button.clearfix.fixed-bottom.btn-dark.rounded-circle(href='/manual_new' role='button')
+        i.fa.fa-exclamation-circle.fa-3x(aria-hidden='true')
+
+    form(action=`/room/${currentUser._id}` method='POST')
+        .col-lg-10.mx-auto
+            h1 방올리기
+        include ../_form
+        .col-10.mx-auto
+            button.btn.btn-outline-dark.btn-lg(type='submit')
+                | 저장

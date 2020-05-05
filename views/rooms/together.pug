@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+    // 정렬 버튼 3개 필요
+    // 시간순 , 이름순 , 가격순
+    a.manual_button.clearfix.fixed-bottom.btn-dark.rounded-circle(href='/manual_together' role='button')
+        i.fa.fa-exclamation-circle.fa-3x(aria-hidden='true')
+
+    .row.col-lg-10.col-md-10.col-sm-12.mx-auto.mb-3.mt-3
+      form.col.mx-auto.col-12(action='/room/together' method='get')
+        button.btn.btn-secondary(type="submit" , name="sort" , value="createdAt")
+          |시간순
+        button.btn.btn-secondary(type="submit" , name="sort" , value="title")
+          |이름순
+        button.btn.btn-secondary(type="submit" , name="sort" , value="monthly_rent")
+          |가격순
+
+    // list_card
+    .list_card
+      .row.mx-auto.col-lg-10.col-md-10.col-sm-12
+        // 카드 반복
+        each room in rooms
+          .col.col-12.mx-auto.mb-5
+            a(href=`/room/${room._id}`)
+              .alert.alert-dark(role="alert") 
+                .d-flex.justify-content-around
+                  .row.col-lg-12.col-md-12.col-sm-12
+                    h1.col-lg-3.col-md-6.col-sm-12=room.title
+                    |
+                    h4.col-lg-3.col-md-6.col-sm-12=room.user_id.name   
+                    |
+                    h4.col-lg-3.col-md-6.col-sm-12=room.locate
+                    |
+                    h4.col-lg-3.col-md-6.col-sm-12=room.monthly_rent
+                
+
+    

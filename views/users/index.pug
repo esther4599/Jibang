@@ -1,0 +1,67 @@
+extends ../layout
+
+block content
+    a.manual_button.fixed-bottom.btn-dark.rounded-circle(href='/manual_mypage' role='button')
+        i.fa.fa-exclamation-circle.fa-3x(aria-hidden='true')
+    |
+    .col-lg-10.myPage.mx-auto
+        h1 Mypage
+    |
+    // list_card
+    .col.list_card.col-lg-6.col-md-6.col-sm-12.float-left
+        // 카드 반복
+        each room in rooms
+            .col-lg-12.col-md-12.col-sm-12.mx-auto.mb-5
+                a(href=`/room/${room._id}`)
+                    .card.cardsize
+                        // 이미지 링크 필요
+                        img.card-img-top.cards-img.mx-auto(src=room.img[0], alt='Card image cap')
+                        .card-body.card_bodysize.boder
+                            h4.card-title
+                                p=room.title
+                                p=room.user_id.name
+                                p=room.locate
+                                p=room.monthly_rent
+                                a.btn.btn-primary(href=`/mypage/${room._id}/edit`) 수정
+                                a.btn.btn-danger.top(href=`/mypage/${room._id}?_method=DELETE`) 삭제
+
+
+    // map
+    .row.col-lg-6.col-md-6.fixed-bottom.list_maplocate.float-right
+        .col.col-lg-12.col-md-12
+            #map.col-lg-10.col-md-10.mx-auto.main_map
+                h1 지도가 들어갈 자리입니다.
+                script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=297ef10405e7f474395afe8d2094db8b&libraries=services')
+                |
+                script.
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    };
+                    // 지도를 생성합니다
+                    var map = new daum.maps.Map(mapContainer, mapOption);
+                    // 주소-좌표 변환 객체를 생성합니다
+                    var geocoder = new daum.maps.services.Geocoder();
+                    // 주소로 좌표를 검색합니다
+                each room in rooms
+                    script.
+                        geocoder.addressSearch(`#{room.address}`, function(result, status) {
+                            console.log(`#{room.address}`);
+                            // 정상적으로 검색이 완료됐으면
+                            if (status === daum.maps.services.Status.OK) {
+                                var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+                                // 결과값으로 받은 위치를 마커로 표시합니다
+                                var marker = new daum.maps.Marker({
+                                    map: map,
+                                    position: coords
+                                });
+                                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                var infowindow = new daum.maps.InfoWindow({
+                                    content: '<div style="width:150px;text-align:center;padding:6px 0;">' + `#{room.title}` + '</div>'
+                                });
+                                infowindow.open(map, marker);
+                                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                map.setCenter(coords);
+                            }
+                        });

@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    form(action=`/mypage/${room._id}?_method=PUT` method='post')
+        .col-lg-10.mx-auto
+            h1 방올리기
+        include ../_form
+        .article_write-btn.mb-5.mx-auto.col-10
+          button.btn.btn-outline-dark.btn-lg(type='submit')
+              | 수정

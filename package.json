@@ -1,0 +1,48 @@
+{
+  "name": "jibang",
+  "version": "1.0.0",
+  "description": "똥땅이네는 명지대학교 학생들이 좀 더 편하게 방을 구할때 정보를 얻을 수 있는 커뮤니티를 개발을 위한 프로젝트이다",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Leechanggun@bitbucket.org/Leechanggun/jibang.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/Leechanggun/jibang#readme",
+  "dependencies": {
+    "aws-sdk": "^2.143.0",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "cool-ascii-faces": "1.3.4",
+    "debug": "~2.6.9",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "formidable": "^1.1.1",
+    "fs": "0.0.1-security",
+    "jade": "^1.11.0",
+    "method-override": "^2.3.10",
+    "mongoose": "^4.12.4",
+    "mongoose-findorcreate": "^2.0.0",
+    "mongoose-paginate": "^5.0.3",
+    "morgan": "~1.9.0",
+    "node-sass-middleware": "0.9.8",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
+    "passport-openid": "^0.4.0",
+    "pug": "2.0.0-beta11",
+    "serve-favicon": "~2.4.5",
+    "uuid": "^3.1.0"
+  },
+  "engines": {
+    "node": "8.6.0",
+    "npm": "5.3.0"
+  }
+}

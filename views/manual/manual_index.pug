@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    h1.text-center 사용자 설명서
+    .row.col-lg-12.col-md-12.mx-auto
+        .card.col.col-lg-8.col-md-10.col-sm-12.mx-auto.m-2
+            img.card-img-top(src='images/index.png' alt='home')
+            .card-body
+                ul
+                    li 기본적인 메인 홈페이지 화면입니다.
+                    li 1번 위치의 집모양 또는 JI방을 클릭하면 사이트 어디에서든 메인 홈페이지로 돌아올 수 있습니다.
+                    li 2번 위치의 login을 클릭하면 로그인 페이지로 이동합니다.
+                    li 3번 위치는 지도이며 각 마을의 대략적인 위치를 나타내줍니다.
+                    li 4번 위치는 각 마을 별 등록된 방을 확인할 수 있는 게시판으로 이동합니다.
+    |               
+    .row.col-lg-12.col-md-12.mx-auto
+        .card.col.col-lg-8.col-md-10.col-sm-12.mx-auto.m-2
+            img.card-img-top(src='images/index_login.png' alt='home_login')
+            .card-body
+                ul
+                    li 로그인 이후의 메인 홈페이지 화면입니다. 로그인 전과 기능은 동일하나 로그인 후 추가 된 버튼이 있습니다.
+                    li 1번 위치의 ID 버튼을 클릭하면 내가 업로드한 게시물을 확인하고 수정할 수 있는 마이페이로 이동합니다.
+                    li 2번 위치의 방올리기 버튼을 클릭하면 저희 JI방이 제공하는 입력양식 폼에 따라 게시물을 작성 할 수 있습니다.
+                    li 3번 위치의 로그아웃 버튼을 클릭하면 로그아웃 할 수 있습니다.

@@ -1,0 +1,205 @@
+extends ../layout
+
+block content
+  // show img
+  a.manual_button.clearfix.fixed-bottom.btn-dark.rounded-circle(href='/manual_detail' role='button')
+    i.fa.fa-exclamation-circle.fa-3x(aria-hidden='true')
+  .row.mx-auto
+    #img_slide.carousel.slide.col-md-8.col-sm-11.mx-auto(data-ride='carousel')
+      ol.carousel-indicators
+        -for (var i = 0 ; i < room.img.length ; i++)
+          li(data-target='#img_slide', data-slide-to=i)
+      |
+      .carousel-inner
+        .carousel-item.active.slide-img
+          img.d-block.slide-img-size.mx-auto(src=room.img[0], alt='slide room img')
+        -for (var i = 1; i < room.img.length; i++) 
+          .carousel-item.slide-img
+            img.d-block.slide-img-size.mx-auto(src=room.img[i] , alt='img_slide')
+        |
+      |
+      a.carousel-control-prev(href='#img_slide', role='button', data-slide='prev')
+        span.carousel-control-prev-icon.arrow(aria-hidden='true')
+        |
+        span.sr-only Previous
+      |
+      a.carousel-control-next(href='#img_slide', role='button', data-slide='next')
+        span.carousel-control-next-icon.arrow(aria-hidden='true')
+        |
+        span.sr-only Next
+    |
+    |
+
+
+    #map.col-md-4.bg-dark.mx-auto.showmap
+      h1 지도가 들어갈 자리입니다.
+      script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=297ef10405e7f474395afe8d2094db8b&libraries=services')
+      |
+      script.
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+          center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+          level: 2 // 지도의 확대 레벨
+        };
+        // 지도를 생성합니다
+        var map = new daum.maps.Map(mapContainer, mapOption);
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new daum.maps.services.Geocoder();
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch(`#{room.address}`, function(result, status) {
+          // 정상적으로 검색이 완료됐으면
+          if (status === daum.maps.services.Status.OK) {
+            var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new daum.maps.Marker({
+              map: map,
+              position: coords
+            });
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new daum.maps.InfoWindow({
+              content: '<div style="width:150px;text-align:center;padding:6px 0;">' + `#{room.title}`+ '</div>'
+            });
+            infowindow.open(map, marker);
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+          }
+        });
+
+
+  |
+  |
+  |
+  .row.col-lg-12
+    .col-lg-8.col-md-6.col-sm-12.mt-4
+      h1
+        p.mb-4.font-weight-bold=room.title
+      |
+      .mx-auto.border.border-left-0.border-right-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 상세정보
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                |
+                th 작성자 :
+                td.font-weight-normal=room.user_id.name
+              tr
+                |
+                th 위치 :
+                td.font-weight-normal=room.locate
+              tr
+                |
+                th 방 종류 :
+                td.font-weight-normal=room.type
+              tr
+                |
+                th 계약 기간 :
+                td.font-weight-normal=room.time
+              tr
+                |
+                th 평수 :
+                td.font-weight-normal=room.size
+              tr
+                |
+                th 보증금 :
+                td.font-weight-normal=room.security_money
+              tr
+                |
+                th 월세 :
+                td.font-weight-normal=room.monthly_rent
+              tr
+                |
+                th 관리비 :
+                td.font-weight-normal=room.management_expenses
+      |
+      .mx-auto.border.border-left-0.border-right-0.border-top-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 옵션
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                th 옵션1 :
+                td.font-weight-normal=room.option1
+              tr
+                th 옵션2 :
+                td.font-weight-normal=room.option2
+              tr
+                th 옵션3 :
+                td.font-weight-normal=room.option3
+              tr
+                th 옵션4 :
+                td.font-weight-normal=room.option4
+              tr
+                th 옵션5 :
+                td.font-weight-normal=room.option5
+              tr
+                th 옵션6 :
+                td.font-weight-normal=room.option6
+              tr
+                th 추가 옵션 :
+                td.font-weight-normal=room.etc_option
+
+      |
+      .mx-auto.border.border-left-0.border-right-0.border-top-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 세금
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                |
+                th 전기세 :
+                td.font-weight-normal=room.electric
+              tr
+                |
+                th 가스비 :
+                td.font-weight-normal=room.gas
+              tr
+                |
+                th 수도세 :
+                td.font-weight-normal=room.water
+      |
+      .mx-auto.border.border-left-0.border-right-0.border-top-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 주소
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                |
+                td.font-weight-normal=room.address
+                  |       #{room.detail_address}
+      |
+      .mx-auto.border.border-left-0.border-right-0.border-top-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 부가 설명
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                |
+                td.font-weight-normal=room.addition_ex
+      .mx-auto.border.border-left-0.border-right-0.border-top-0
+        h2.show-needMargin.mb-4.mt-4.font-weight-bold.font-weight-bold 전화번호
+          table.table.table-bordered.m-3.mx-auto
+            thead
+            tbody
+              tr
+                |
+                td.font-weight-normal=room.phone_num
+    |
+    .col-lg-4.col-md-6.col-sm-12
+      .mx-auto.m-4.border.border-left-0.border-right-0.border-top-0
+        h2.mb-4.mt-4.font-weight-bold.font-weight-bold 후기 후기~
+        |
+        each after in afters
+          .lg-12.m-5.border.comment
+            p=after.user_id.name
+            p.ml-4.mt-2=after.content
+            .clearfix
+              a.show-needMarginbtn.float-right.btn.btn-outline-primary.top(href=`${after._id}/after/?_method=DELETE`) 삭제
+        |
+        form(action=`${room._id}/after/` method='post')
+          .col-10.mx-auto.m-2
+            h3.show-needMarginBtn 후기 남기기
+            |
+            input.border.border-dark.col-lg-6(type='text', name='content')
+            button.btn.btn-secondary(type="submit")
+              |제출
