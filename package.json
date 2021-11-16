@@ -15,7 +15,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/Leechanggun/jibang#readme",
   "dependencies": {
-    "aws-sdk": "^2.143.0",
+    "aws-sdk": "^2.814.0",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
     "cookie": "^0.3.1",
